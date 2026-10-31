@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 include "db.php";
 
 $message = "";
@@ -21,7 +22,15 @@ if (isset($_POST['register'])) {
         VALUES ('$Username', '$HashedPassword')");
 
         if ($Insert) {
-            $message = "Registration successful! You can now login.";
+
+            $Query = mysqli_query($conn, "SELECT * FROM users WHERE username='$Username'");
+            $User = mysqli_fetch_assoc($Query);
+
+            $_SESSION['user_id'] = $User['user_id'];
+            $_SESSION['username'] = $User['username'];
+
+            header("Location: dashboard.php");
+            exit();
         }
         else {
             $message = "Registration failed!";
@@ -34,6 +43,7 @@ if (isset($_POST['register'])) {
 <html>
 <head>
     <title>UniArchive - Register</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
