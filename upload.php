@@ -20,13 +20,16 @@ if (isset($_POST['upload'])) {
     $TempName = $_FILES['file']['tmp_name'];
     $FileSize = $_FILES['file']['size'];
 
-    $FileExtension = pathinfo($FileName, PATHINFO_EXTENSION);
+    $FileExtension = strtolower(pathinfo($FileName, PATHINFO_EXTENSION));
 
     if ($FileExtension != "pdf") {
         $message = "Only PDF files are allowed!";
     }
     else if ($FileSize > 10 * 1024 * 1024) {
         $message = "File size must be below 10 MB!";
+    }
+    else if ($FileSize == 0) {
+        $message = "Please select a valid file!";
     }
     else {
 
@@ -58,6 +61,7 @@ if (isset($_POST['upload'])) {
 <html>
 <head>
     <title>UniArchive - Upload</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -87,7 +91,7 @@ if (isset($_POST['upload'])) {
 
     <p><?php echo $message; ?></p>
 
-    <a href="dashboard.php">Back to Dashboard</a>
+    <p><a href="dashboard.php">Back to Dashboard</a></p>
 
 </body>
 </html>
