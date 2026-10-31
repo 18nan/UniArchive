@@ -19,14 +19,13 @@ $Result = mysqli_query($conn, $Query);
 <html>
 <head>
     <title>UniArchive - My Uploads</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h2>My Uploaded Study Materials</h2>
 
-    <a href="dashboard.php">Back to Dashboard</a>
-
-    <br><br>
+    <p><a href="dashboard.php">Back to Dashboard</a></p>
 
     <?php
     if (mysqli_num_rows($Result) > 0) {
@@ -41,6 +40,7 @@ $Result = mysqli_query($conn, $Query);
                 <th>File Name</th>
                 <th>File Size</th>
                 <th>Download</th>
+                <th>Delete</th>
             </tr>
 
             <?php
@@ -48,18 +48,21 @@ $Result = mysqli_query($conn, $Query);
             ?>
 
                 <tr>
-                    <td><?php echo $Row['subject']; ?></td>
-                    <td><?php echo $Row['chapter']; ?></td>
-                    <td><?php echo $Row['title']; ?></td>
-                    <td><?php echo $Row['file_name']; ?></td>
-
-                    <td>
-                        <?php echo round($Row['file_size'] / 1024 / 1024, 2); ?> MB
-                    </td>
+                    <td><?php echo htmlspecialchars($Row['subject']); ?></td>
+                    <td><?php echo htmlspecialchars($Row['chapter']); ?></td>
+                    <td><?php echo htmlspecialchars($Row['title']); ?></td>
+                    <td><?php echo htmlspecialchars($Row['file_name']); ?></td>
+                    <td><?php echo round($Row['file_size'] / 1024 / 1024, 2); ?> MB</td>
 
                     <td>
                         <a href="download.php?id=<?php echo $Row['note_id']; ?>">
                             Download
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="delete.php?id=<?php echo $Row['note_id']; ?>">
+                            Delete
                         </a>
                     </td>
                 </tr>
