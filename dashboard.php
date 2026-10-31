@@ -19,8 +19,8 @@ $Query = "SELECT notes.*, users.username
 
 if (isset($_GET['search'])) {
 
-    $Subject = mysqli_real_escape_string($conn, $_GET['subject']);
-    $Chapter = mysqli_real_escape_string($conn, $_GET['chapter']);
+    $Subject = $_GET['subject'];
+    $Chapter = $_GET['chapter'];
     $MaxSize = $_GET['max_size'];
 
     if ($Subject != "") {
@@ -32,7 +32,6 @@ if (isset($_GET['search'])) {
     }
 
     if ($MaxSize != "any" && is_numeric($MaxSize)) {
-        $MaxSize = (int)$MaxSize;
         $Query = $Query . " AND file_size <= " . ($MaxSize * 1024 * 1024);
     }
 }
@@ -44,6 +43,7 @@ $Result = mysqli_query($conn, $Query);
 <html>
 <head>
     <title>UniArchive - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -51,9 +51,11 @@ $Result = mysqli_query($conn, $Query);
 
     <p>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</p>
 
-    <a href="upload.php">Upload Study Material</a> |
-    <a href="my_uploads.php">My Uploads</a> |
-    <a href="logout.php">Logout</a>
+    <p>
+        <a href="upload.php">Upload Study Material</a> |
+        <a href="my_uploads.php">My Uploads</a> |
+        <a href="logout.php">Logout</a>
+    </p>
 
     <hr>
 
@@ -64,13 +66,11 @@ $Result = mysqli_query($conn, $Query);
         Subject:
         <input type="text" name="subject"
         value="<?php echo htmlspecialchars($Subject); ?>">
-
         <br><br>
 
         Chapter:
         <input type="text" name="chapter"
         value="<?php echo htmlspecialchars($Chapter); ?>">
-
         <br><br>
 
         Maximum File Size:
@@ -88,8 +88,6 @@ $Result = mysqli_query($conn, $Query);
         <input type="submit" name="search" value="Search">
 
     </form>
-
-    <hr>
 
     <h2>Available Study Materials</h2>
 
