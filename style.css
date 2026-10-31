@@ -1,0 +1,25 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: lavender;
+    color: indigo;
+}
+
+h1, h2 {
+    color: purple;
+    text-align: center;
+}
+
+a {
+    color: darkviolet;
+    text-decoration: none;
+}
+
+th {
+    background-color: purple;
+    color: white;
+}
+
+p {
+    text-align: center;
+}
