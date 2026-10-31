@@ -40,6 +40,7 @@ if (isset($_POST['login'])) {
 <html>
 <head>
     <title>UniArchive - Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
